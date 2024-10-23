@@ -1,0 +1,33 @@
+import tkinter as tk
+import subprocess
+
+def greet():
+  name = name_entry.get()
+  greeting_label.config(text=f"Hello, {name}!")
+  command = f"echo Hello, {name}!"
+  process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+  output, error = process.communicate()
+  print(output.decode())
+  console_output.config(state="normal")
+  console_output.insert(tk.END, f" {name}\n")
+  console_output.config(state="disabled")
+
+window = tk.Tk()
+window.title("Greeting App")
+
+root_frame = tk.Frame(window)
+root_frame.pack()
+
+greeting_label = tk.Label(root_frame, text="")
+greeting_label.pack()
+
+name_entry = tk.Entry(root_frame)
+name_entry.pack()
+
+greet_button = tk.Button(root_frame, text="Greet", command=greet)
+greet_button.pack()
+
+console_output = tk.Text(root_frame, state="disabled", height=5, width=30)
+console_output.pack()
+
+window.mainloop()
